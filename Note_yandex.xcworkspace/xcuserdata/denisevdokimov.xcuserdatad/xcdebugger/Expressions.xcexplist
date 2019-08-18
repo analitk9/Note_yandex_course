@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "Note.json.getter:NoteExtension.swift">
+      </ContextState>
+      <ContextState
+         contextName = "GradientView.sliderMoved(_:):GradientView.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "sender.value">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "NoteViewController.viewDidLoad():NoteViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "SquareView.draw(_:):SquareView.swift">
+      </ContextState>
+      <ContextState
+         contextName = "NoteTableViewController.tableView(_:didSelectRowAt:):NoteTableViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "NoteTableViewController.unwindAction(unwindSegue:):NoteTableViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "receiveNote.color == UIColor.white">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "NoteViewController.selectCustomColor():NoteViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "gradientView">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "GradientView.HSBColorColorPickerTouched(sender:color:point:state:):GradientView.swift">
+      </ContextState>
+      <ContextState
+         contextName = "NoteViewController.configureInputField():NoteViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "ViewController.upDateTextView(param:):ViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = " contentTextView.contentInset">
+            </PersistentString>
+            <PersistentString
+               value = "contentTextView.frame">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "NoteTableViewController.tableView(_:commit:forRowAt:):NoteTableViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "NoteTableViewController.tableView(_:heightForRowAt:):NoteTableViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "NoteTableViewController.prepare(for:sender:):NoteTableViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "NoteTableViewController.configureData():NoteTableViewController.swift">
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>
