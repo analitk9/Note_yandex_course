@@ -12,7 +12,11 @@ import UIKit
 enum  Important:String, Codable {
     case unimportant = "unimportant"
     case normal = "normal"
-    case critical = "critical"    
+    case critical = "critical"
+    
+    func returnString()-> String{
+        return self.rawValue
+    }
 }
 
 struct Note {

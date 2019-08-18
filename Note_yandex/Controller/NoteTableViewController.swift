@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class NoteTableViewController: UITableViewController {
     
@@ -20,30 +21,38 @@ class NoteTableViewController: UITableViewController {
     let commonQueue = OperationQueue()
     var accessToken: String?
     
+    var context: NSManagedObjectContext!
+    var backgroundContext: NSManagedObjectContext! {
+        didSet {
+            configureData()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-       configureData()
+      // takeToken()
+      // configureData()
        createBarButton()
        configureBarButton()
         
     }
     
-   private func  configureData() {
-    
-
-  // print( KeychainWrapper.standard.removeObject(forKey: "url"))
-    guard KeychainWrapper.standard.string(forKey: "SecretToken") != nil  else {
-        let authView = (self.storyboard?.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController)
-        authView!.delegate = self
-        
-        self.present(authView!, animated: true, completion: nil)
-        return
+    private func takeToken() {
+        print( KeychainWrapper.standard.removeObject(forKey: "SecretToken"))
+        guard KeychainWrapper.standard.string(forKey: "SecretToken") != nil  else {
+            let authView = (self.storyboard?.instantiateViewController(withIdentifier: "AuthViewController") as? AuthViewController)
+            authView!.delegate = self
+            
+            self.present(authView!, animated: true, completion: nil)
+            return
+        }
     }
+    
+   private func  configureData() {
     
     //вызов LoadNotesOperation
 
-  let op =   LoadNotesOperation(notebook: noteBook, backendQueue: backendQueue, dbQueue: dbQueue)
+  let op =   LoadNotesOperation(notebook: noteBook, backendQueue: backendQueue, dbQueue: dbQueue, bgContext: backgroundContext)
     
     op.completionBlock = {
         let updateUI = BlockOperation {
@@ -88,19 +97,25 @@ class NoteTableViewController: UITableViewController {
         if  unwindSegue.identifier == "back" {
             let sourceVC = unwindSegue.source as? NoteViewController
             guard  let receiveNote = sourceVC?.currentNote! else {return}
-            //вызов SaveNoteOperation
           
-           SaveNoteOperation(note: receiveNote,
+         let saveOper =  SaveNoteOperation(note: receiveNote,
                             notebook: noteBook,
                             backendQueue: backendQueue,
-                            dbQueue: dbQueue).start()
-            
-            let updateUI = BlockOperation {
-              
-                self.prepareNoteArray()
-                self.tableView.reloadData()
+                            dbQueue: dbQueue, bgContext: backgroundContext)
+            saveOper.completionBlock = {
+                let updateUI = BlockOperation {
+                    
+                    self.prepareNoteArray()
+                    self.tableView.reloadData()
+                }
+                OperationQueue.main.addOperation(updateUI)
             }
-            OperationQueue.main.addOperation(updateUI)
+            
+           commonQueue.addOperation(saveOper)
+                
+            
+            
+            
         }
     }
     
@@ -150,12 +165,11 @@ class NoteTableViewController: UITableViewController {
             let removeOper = RemoveNoteOperation(note: notes[indexPath.row],
                                                           notebook: noteBook,
                                                           backendQueue: backendQueue,
-                                                          dbQueue: dbQueue)
+                                                          dbQueue: dbQueue, bgContext: backgroundContext)
            
             removeOper.completionBlock = {
                 let updateUI = BlockOperation {
                     
-                    print("количество при обновлении \(self.noteBook.notes.count)")
                     self.prepareNoteArray()
                     self.tableView.reloadData()
                 }

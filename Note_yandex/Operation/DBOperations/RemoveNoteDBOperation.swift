@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import CoreData
 enum RemoveNotesDBResult {
     case success
     case failure(NetworkError)
@@ -17,9 +17,12 @@ enum RemoveNotesDBResult {
 class RemoveNoteDBOperation: BaseDBOperation {
     private let note: Note
     var result: RemoveNotesDBResult?
-    
+    let bgContext: NSManagedObjectContext!
     init(note: Note,
-         notebook: FileNotebook) {
+         notebook: FileNotebook,
+         bgContext: NSManagedObjectContext) {
+        
+        self.bgContext = bgContext
         self.note = note
         super.init(notebook: notebook)
     }
@@ -27,7 +30,7 @@ class RemoveNoteDBOperation: BaseDBOperation {
     override func main() {
        
         notebook.remove(with: note.uid)
-        if  NotebookService().saveToFile(notebook: self.notebook) {
+        if  NotebookService().removeFromDB(note: note, bgContext: bgContext){
                result = .success
             print("записали изменения в файл")
             finish()
@@ -35,16 +38,6 @@ class RemoveNoteDBOperation: BaseDBOperation {
             print("error не смогли записать в файл")
             finish()
         }
-//        let oper = SaveNoteDBOperation( note: nil, notebook: notebook)
-//        oper.completionBlock =  {
-//            print("удалили запись RemoveNoteDBOperation")
-//             self.finish()
-//
-//        }
-//        OperationQueue().addOperation(oper)
-        
-        
-      
     }
     
 }

@@ -40,6 +40,7 @@
 		642DFBF122DDF94700AAAEC7 /* NoteTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642DFBF022DDF94600AAAEC7 /* NoteTableViewController.swift */; };
 		6432605B22D1E9E40090DEA9 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6432605A22D1E9E40090DEA9 /* GradientView.swift */; };
 		6432605D22D1F4EE0090DEA9 /* HSBColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6432605C22D1F4EE0090DEA9 /* HSBColorPicker.swift */; };
+		643DFE262309401500906185 /* NoteDB.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 643DFE242309401500906185 /* NoteDB.xcdatamodeld */; };
 		6440EA8C22C9EC7C001A371B /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642129F822C6687B00CE5F33 /* Note.swift */; };
 		6440EA9022C9EE7E001A371B /* NoteExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642129F622C6687B00CE5F33 /* NoteExtension.swift */; };
 		6440EA9322C9F5E5001A371B /* FileNotebook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642129F722C6687B00CE5F33 /* FileNotebook.swift */; };
@@ -102,6 +103,8 @@
 		642DFBF022DDF94600AAAEC7 /* NoteTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTableViewController.swift; sourceTree = "<group>"; };
 		6432605A22D1E9E40090DEA9 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		6432605C22D1F4EE0090DEA9 /* HSBColorPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HSBColorPicker.swift; sourceTree = "<group>"; };
+		643DFE252309401500906185 /* NoteDB.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NoteDB.xcdatamodel; sourceTree = "<group>"; };
+		643DFE282309879000906185 /* NoteDB 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "NoteDB 2.xcdatamodel"; sourceTree = "<group>"; };
 		6440EA7E22C9EAC2001A371B /* Note_yandexTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Note_yandexTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		64C900DE22F96A9B00F60F06 /* KeychainItemAccessibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainItemAccessibility.swift; sourceTree = "<group>"; };
 		64C900E022F96AC300F60F06 /* KeychainWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainWrapper.swift; sourceTree = "<group>"; };
@@ -251,6 +254,7 @@
 		642129F522C6680F00CE5F33 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				643DFE242309401500906185 /* NoteDB.xcdatamodeld */,
 				64C900DB22F9670100F60F06 /* Crypto */,
 				64C900E622F9809000F60F06 /* Gist.swift */,
 				642129F722C6687B00CE5F33 /* FileNotebook.swift */,
@@ -480,6 +484,7 @@
 				640DA06E22EDCB6C005B9AB1 /* SaveNoteDBOperation.swift in Sources */,
 				640DA04522E724F0005B9AB1 /* GalleryCell.swift in Sources */,
 				642DFB4822D4B49B00AAAEC7 /* Extension.swift in Sources */,
+				643DFE262309401500906185 /* NoteDB.xcdatamodeld in Sources */,
 				640DA06622EDCADC005B9AB1 /* LoadNotesOperation.swift in Sources */,
 				64C900EA22F9833600F60F06 /* GistService.swift in Sources */,
 				642129FA22C6687B00CE5F33 /* FileNotebook.swift in Sources */,
@@ -867,6 +872,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		643DFE242309401500906185 /* NoteDB.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				643DFE282309879000906185 /* NoteDB 2.xcdatamodel */,
+				643DFE252309401500906185 /* NoteDB.xcdatamodel */,
+			);
+			currentVersion = 643DFE252309401500906185 /* NoteDB.xcdatamodel */;
+			path = NoteDB.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 642129D822C666B600CE5F33 /* Project object */;
 }

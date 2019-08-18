@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import CoreData
 enum LoadNotesDBResult {
     case success(FileNotebook)
     case failure(NetworkError)
@@ -17,16 +17,17 @@ class LoadNotesDBOperation: BaseDBOperation {
     
     let notebookService = NotebookService()
     var result: LoadNotesDBResult?
+    let bgContext: NSManagedObjectContext!
     
 
-    override init(notebook: FileNotebook) {
-        
+     init(notebook: FileNotebook, bgContext: NSManagedObjectContext) {
+        self.bgContext = bgContext
         super.init(notebook: notebook)
     }
     
     override func main() {
         
-        if let notes =  notebookService.loadFromFile(notebook: notebook){
+        if let notes =  notebookService.loadFromDB(notebook: notebook, bgContext: bgContext){
            result = .success(notes)
         } else {
             result = .failure(.unreachable)

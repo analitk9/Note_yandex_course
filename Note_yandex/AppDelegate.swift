@@ -8,14 +8,39 @@
 
 import UIKit
 import CocoaLumberjack
+import CoreData
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    
+    var container: NSPersistentContainer!
     var window: UIWindow?
 
 
+    func createContainer( completion: @escaping (NSPersistentContainer)-> ()){
+        let container = NSPersistentContainer(name: "NoteDB")
+        container.loadPersistentStores { (_, error) in
+            guard error == nil else {
+                fatalError("Faile to load store")
+            }
+        }
+        DispatchQueue.main.async {
+            completion(container)
+        }
+    }
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        createContainer { container in
+            self.container = container
+        if let tabVC = self.window?.rootViewController as? UITabBarController,
+            let navVC = tabVC.viewControllers![0] as? UINavigationController,
+            let tableVC = navVC.topViewController as? NoteTableViewController {
+            tableVC.context = container.viewContext
+            tableVC.backgroundContext = container.newBackgroundContext()
+        }
+        }
+
         
         DDLog.add(DDOSLogger.sharedInstance)
         let fileLogger: DDFileLogger = DDFileLogger() // File Logger

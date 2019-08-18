@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import CoreData
+import UIKit
 
 class NotebookService {
     
@@ -37,7 +39,35 @@ class NotebookService {
             return nil
         }
     }
-   
+    
+    public func loadFromDB(notebook: FileNotebook, bgContext: NSManagedObjectContext) -> FileNotebook? {
+       var notes = [Note]()
+
+        let fetchRequest: NSFetchRequest<SimpleNote> = SimpleNote.fetchRequest()
+        bgContext.performAndWait {
+            do {
+                let coreDataNotes = try bgContext.fetch(fetchRequest)
+                for noteCD in coreDataNotes {
+                    // создаем массив [Note]
+                    let uid = noteCD.uid!
+                    let title = noteCD.title!
+                    let content = noteCD.content!
+                    let color = noteCD.color as! UIColor
+                    let important =   Important.init(rawValue: noteCD.importance!)!
+                    let destructionDate = noteCD.selfDestructionDate ?? nil
+                    let note = Note(uid: uid, title: title, content: content, color: color, important: important, destructionDate: destructionDate)
+                    notes.append(note)
+                }
+            } catch {
+               print(error)
+            }
+        }
+        
+        notebook.fill(by: notes)
+        
+     return notebook
+    }
+
     public func saveToFile(notebook: FileNotebook)-> Bool {
       
         guard  let filename = createPath() else {return false}
@@ -51,6 +81,59 @@ class NotebookService {
             return false
         }
        
+    }
+    
+    public func saveToDB(note: Note, bgContext: NSManagedObjectContext) -> Bool {
+        if removeFromDB(note: note, bgContext: bgContext){
+            print("это редактирование, удалили для перезаписи")
+        }else {
+            print("это новая запись")
+        }
+        var result = false
+        let simpleNote = SimpleNote(context: bgContext)
+        simpleNote.color = note.color as NSObject
+        simpleNote.content = note.content
+        simpleNote.importance = note.importance.returnString()
+        simpleNote.title = note.title
+        simpleNote.uid = note.uid
+        simpleNote.selfDestructionDate = note.selfDestructionDate
+        bgContext.performAndWait {
+            do {
+                try  bgContext.save()
+                result = true
+            } catch  {
+                print(error )
+            }
+        }
+        return result
+    }
+    
+    public func removeFromDB(note: Note, bgContext: NSManagedObjectContext) -> Bool {
+        var result = false
+        
+        let fetchRequest: NSFetchRequest<SimpleNote> = SimpleNote.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "uid = %@", note.uid)
+        bgContext.performAndWait {
+            do {
+                let coreDataNotes = try bgContext.fetch(fetchRequest)
+                if coreDataNotes.count != 0 {
+                    bgContext.delete(coreDataNotes[0])
+                    do {
+                        try bgContext.save()
+                        result = true
+                    } catch {
+                        print(error)
+                    }
+                }
+               
+                
+            } catch {
+                print(error)
+            }
+        }
+        
+        
+        return result
     }
     
     func createJson(from notes:[String: Note]) -> [String: Any] {

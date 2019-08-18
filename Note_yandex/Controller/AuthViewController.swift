@@ -38,7 +38,7 @@ class AuthViewController: UIViewController {
         
         // Do any additional setup after loading the view.
         
-        
+        //self.dismiss(animated: false, completion: nil)
         var urlc = URLComponents(string: "https://github.com/login/oauth/authorize")
         
         urlc?.queryItems = [URLQueryItem(name: "client_id", value: client_id),

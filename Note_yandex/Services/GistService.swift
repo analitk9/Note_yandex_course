@@ -97,24 +97,7 @@ class GistService {
         
         task.resume()
     }
-    //
-    //    func getNotebook(from url: URL)-> FileNotebook {
-    //        let notebook = FileNotebook()
-    //        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
-    //            guard error == nil else {
-    //                print(error?.localizedDescription ?? "no description")
-    //                return
-    //            }
-    //            guard let data = data else {return}
-    //            if let js = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
-    //                notebook.fillbyDict(notesDict: self.notebookService.parse(from: js))
-    //            }
-    //        }
-    //        task.resume()
-    //
-    //        return notebook
-    //
-    //    }
+   
     
     ///запрос полного списка gist
     func getGists(completion: @escaping (([Gist]?)-> Void) ) {
@@ -146,31 +129,7 @@ class GistService {
        
        
     }
-    //    /// возвращает gist по id
-    //    func getGist(by url: String) -> Gist? {
-    //        var gist: Gist?
-    //        guard let token = KeychainWrapper.standard.string(forKey: "SecretToken") else { return nil }
-    //        let  compUrl = url
-    //        guard let url = URL(string: compUrl) else {return nil}
-    //        var request = URLRequest(url: url)
-    //        request.httpMethod = "GET"
-    //        request.setValue("token \(token)", forHTTPHeaderField: "Authorization")
-    //        request.cachePolicy = .reloadIgnoringLocalCacheData
-    //        let task = URLSession.shared.dataTask(with: request){ data,response, error in
-    //            guard let data = data else { return  }
-    //            let gistInfo = try? JSONDecoder().decode(Gist.self, from: data)
-    //
-    //            if let gistInfo = gistInfo {
-    //                print("get task by id \(gistInfo)")
-    //
-    //                gist = gistInfo
-    //            }
-    //        }
-    //
-    //        task.resume()
-    //        return gist
-    //    }
-    
+   
     
     ///возвращает из массива gist`ов ссылку(url) на файл ios-course-notes-db
     func returnRawUrl(gists: [Gist])->URL? {

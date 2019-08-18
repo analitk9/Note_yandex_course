@@ -1,4 +1,5 @@
 import Foundation
+import CoreData
 
 enum SaveNotesDBResult {
     case success
@@ -7,20 +8,22 @@ enum SaveNotesDBResult {
 
 
 class SaveNoteDBOperation: BaseDBOperation {
-    private let note: Note?
+    let note: Note
     var result: SaveNotesDBResult?
     let notebookService = NotebookService()
+    let bgContext: NSManagedObjectContext!
     
-    init(note: Note?,
-         notebook: FileNotebook) {
+    init(note: Note,
+         notebook: FileNotebook,
+         bgContext: NSManagedObjectContext) {
         self.note = note
+        self.bgContext = bgContext
         super.init(notebook: notebook)
     }
     
     override func main() {
-        notebook.add(note)
-        if notebookService.saveToFile(notebook: notebook) {
-           // print("save to file done")
+         notebook.add(note)
+        if notebookService.saveToDB(note: note, bgContext: bgContext) {
            result = .success
              finish()
         } else {
